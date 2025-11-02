@@ -1,5 +1,7 @@
 package lotto;
 
+import lotto.error.LottoGameErrorMessage;
+
 public class LottoGame {
     private static final int LOTTO_PRICE = 1000;
 
@@ -12,9 +14,7 @@ public class LottoGame {
 
     private void validatePurchaseAmount(int amount) {
         if (amount % LOTTO_PRICE != 0) {
-            throw new IllegalArgumentException(
-                String.format("[ERROR] 구입 금액은 %d원 단위여야 합니다.", LOTTO_PRICE)
-            );
+            throw new IllegalArgumentException(LottoGameErrorMessage.invalidPurchaseAmountUnit(LOTTO_PRICE));
         }
     }
 
