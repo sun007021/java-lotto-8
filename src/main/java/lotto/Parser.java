@@ -23,9 +23,14 @@ public class Parser {
 
     private static int parseInteger(String input) {
         try {
-            return Integer.parseInt(input);
+            long value = Long.parseLong(input);
+            if (value > Integer.MAX_VALUE || value < Integer.MIN_VALUE) {
+                throw new IllegalArgumentException(InputErrorMessage.numberOverflow());
+            }
+            return (int) value;
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException(InputErrorMessage.invalidNumberFormat());
         }
     }
+
 }
