@@ -78,12 +78,12 @@ class WinningNumbersTest {
     @Test
     void 보너스_번호_범위_예외() {
         // given
-        List<LottoNumber> numbers = createLottoNumbers(1, 2, 3, 4, 5, 6);
+        Lotto winningLotto = new Lotto(createLottoNumbers(1, 2, 3, 4, 5, 6));
 
         // when & then
-        assertThatThrownBy(() -> new WinningNumbers(numbers, new LottoNumber(46)))
+        assertThatThrownBy(() -> new LottoNumber(46))
                 .isInstanceOf(IllegalArgumentException.class);
-        assertThatThrownBy(() -> new WinningNumbers(numbers, new LottoNumber(0)))
+        assertThatThrownBy(() -> new LottoNumber(0))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
