@@ -73,10 +73,10 @@ class LottoResultTest {
         LottoResult result = new LottoResult(Map.of());
 
         // when
-        int totalPrize = result.getTotalPrize();
+        long totalPrize = result.getTotalPrize();
 
         // then
-        assertThat(totalPrize).isEqualTo(0);
+        assertThat(totalPrize).isEqualTo(0L);
     }
 
     @DisplayName("여러 등수가 혼합된 경우 총 상금을 정확히 계산한다")
@@ -93,13 +93,13 @@ class LottoResultTest {
         LottoResult result = new LottoResult(rankCounts);
 
         // when
-        int totalPrize = result.getTotalPrize();
+        long totalPrize = result.getTotalPrize();
 
         // then
-        assertThat(totalPrize).isEqualTo(2_033_175_000);
+        assertThat(totalPrize).isEqualTo(2_033_175_000L);
     }
 
-    @DisplayName("1등이 여러 장일 때 총 상금을 정확히 계산한다 (오버플로우 검증)")
+    @DisplayName("1등이 여러 장일 때 총 상금을 정확히 계산한다 (오버플로우 수정)")
     @Test
     void 일등_여러장_상금_계산() {
         // given
@@ -109,7 +109,7 @@ class LottoResultTest {
         LottoResult result = new LottoResult(rankCounts);
 
         // when
-        int totalPrize = result.getTotalPrize();
+        long totalPrize = result.getTotalPrize();
 
         // then
         assertThat(totalPrize).isEqualTo(6_000_000_000L);

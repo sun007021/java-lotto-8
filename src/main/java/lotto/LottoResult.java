@@ -27,8 +27,12 @@ public class LottoResult {
     }
 
     public double calculateReturnRate(int purchaseAmount) {
-        long totalPrize = getTotalPrize();
-        return (double) totalPrize / purchaseAmount * 100;
+        double returnRate = 0;
+        for (Map.Entry<Rank, Integer> entry : rankCounts.entrySet()) {
+            long prize = (long) entry.getKey().getPrize() * entry.getValue();
+            returnRate += (double) prize / purchaseAmount * 100;
+        }
+        return returnRate;
     }
 
     public int getCountByRank(Rank rank) {
