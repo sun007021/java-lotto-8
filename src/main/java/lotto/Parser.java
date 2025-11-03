@@ -34,7 +34,7 @@ public class Parser {
     }
 
     private static String removeUnit(String input) {
-        return input.replaceAll("[^0-9]", "");
+        return input.replace("원", "");
     }
 
     private static void validateNotEmpty(String input) {
