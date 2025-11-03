@@ -21,11 +21,11 @@ class WinningNumbersTest {
     @Test
     void 정상_생성() {
         // given
-        List<LottoNumber> numbers = createLottoNumbers(1, 2, 3, 4, 5, 6);
+        Lotto winningLotto = new Lotto(createLottoNumbers(1, 2, 3, 4, 5, 6));
         LottoNumber bonus = new LottoNumber(7);
 
         // when
-        WinningNumbers winningNumbers = new WinningNumbers(numbers, bonus);
+        WinningNumbers winningNumbers = new WinningNumbers(winningLotto, bonus);
 
         // then
         assertThat(winningNumbers.getWinningNumbers()).hasSize(6);
@@ -36,11 +36,11 @@ class WinningNumbersTest {
     @Test
     void 보너스_번호_중복_예외() {
         // given
-        List<LottoNumber> numbers = createLottoNumbers(1, 2, 3, 4, 5, 6);
+        Lotto winningLotto = new Lotto(createLottoNumbers(1, 2, 3, 4, 5, 6));
         LottoNumber bonus = new LottoNumber(6);  // 중복
 
         // when & then
-        assertThatThrownBy(() -> new WinningNumbers(numbers, bonus))
+        assertThatThrownBy(() -> new WinningNumbers(winningLotto, bonus))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("[ERROR]")
                 .hasMessageContaining("보너스 번호는 당첨 번호와 중복될 수 없습니다");
@@ -54,7 +54,7 @@ class WinningNumbersTest {
         LottoNumber bonus = new LottoNumber(7);
 
         // when & then
-        assertThatThrownBy(() -> new WinningNumbers(numbers, bonus))
+        assertThatThrownBy(() -> new Lotto(numbers))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("[ERROR]")
                 .hasMessageContaining("6개");
@@ -68,7 +68,7 @@ class WinningNumbersTest {
         LottoNumber bonus = new LottoNumber(7);
 
         // when & then
-        assertThatThrownBy(() -> new WinningNumbers(numbers, bonus))
+        assertThatThrownBy(() -> new Lotto(numbers))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("[ERROR]")
                 .hasMessageContaining("중복");
@@ -91,11 +91,11 @@ class WinningNumbersTest {
     @Test
     void 당첨_번호_정렬() {
         // given
-        List<LottoNumber> numbers = createLottoNumbers(6, 3, 1, 5, 2, 4);
+        Lotto winningLotto = new Lotto(createLottoNumbers(6, 3, 1, 5, 2, 4));
         LottoNumber bonus = new LottoNumber(7);
 
         // when
-        WinningNumbers winningNumbers = new WinningNumbers(numbers, bonus);
+        WinningNumbers winningNumbers = new WinningNumbers(winningLotto, bonus);
         List<LottoNumber> result = winningNumbers.getWinningNumbers();
 
         // then

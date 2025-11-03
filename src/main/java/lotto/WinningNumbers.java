@@ -7,13 +7,13 @@ public class WinningNumbers {
     private final Lotto winningLotto;
     private final LottoNumber bonusNumber;
 
-    public WinningNumbers(List<LottoNumber> numbers, LottoNumber bonusNumber) {
-        this.winningLotto = new Lotto(numbers);
-        validateBonusNotDuplicateWithWinningNumbers(bonusNumber);
+    public WinningNumbers(Lotto winningLotto, LottoNumber bonusNumber) {
+        validateBonusNotDuplicateWithWinningNumbers(winningLotto, bonusNumber);
+        this.winningLotto = winningLotto;
         this.bonusNumber = bonusNumber;
     }
 
-    private void validateBonusNotDuplicateWithWinningNumbers(LottoNumber bonusNumber) {
+    private void validateBonusNotDuplicateWithWinningNumbers(Lotto winningLotto, LottoNumber bonusNumber) {
         if (winningLotto.contains(bonusNumber)) {
             throw new IllegalArgumentException(LottoErrorMessage.bonusDuplicatesWinning());
         }
