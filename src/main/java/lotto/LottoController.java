@@ -10,6 +10,8 @@ public class LottoController {
         OutputView.printPurchasedLottos(game.getTickets());
 
         WinningNumbers winningNumbers = createWinningNumbers();
+        LottoResult result = game.getTickets().checkResults(winningNumbers);
+        OutputView.printResults(result);
     }
 
     private LottoGame purchaseLotto() {
