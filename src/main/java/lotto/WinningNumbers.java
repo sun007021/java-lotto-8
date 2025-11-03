@@ -26,4 +26,10 @@ public class WinningNumbers {
     public LottoNumber getBonusNumber() {
         return bonusNumber;
     }
+
+    public Rank checkRank(Lotto purchasedLotto) {
+        int matchCount = winningLotto.countMatches(purchasedLotto);
+        boolean bonusMatch = purchasedLotto.contains(bonusNumber);
+        return Rank.valueOf(matchCount, bonusMatch);
+    }
 }

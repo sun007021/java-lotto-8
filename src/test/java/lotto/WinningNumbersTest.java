@@ -97,4 +97,94 @@ class WinningNumbersTest {
         assertThat(result.get(0).getValue()).isEqualTo(1);
         assertThat(result.get(5).getValue()).isEqualTo(6);
     }
+
+    @DisplayName("6개 일치하면 1등이다")
+    @Test
+    void 일등_판정() {
+        // given
+        Lotto winningLotto = new Lotto(createLottoNumbers(1, 2, 3, 4, 5, 6));
+        WinningNumbers winningNumbers = new WinningNumbers(winningLotto, new LottoNumber(7));
+        Lotto purchasedLotto = new Lotto(createLottoNumbers(1, 2, 3, 4, 5, 6));
+
+        // when
+        Rank rank = winningNumbers.checkRank(purchasedLotto);
+
+        // then
+        assertThat(rank).isEqualTo(Rank.FIRST);
+    }
+
+    @DisplayName("5개 일치하고 보너스가 일치하면 2등이다")
+    @Test
+    void 이등_판정() {
+        // given
+        Lotto winningLotto = new Lotto(createLottoNumbers(1, 2, 3, 4, 5, 6));
+        WinningNumbers winningNumbers = new WinningNumbers(winningLotto, new LottoNumber(7));
+        Lotto purchasedLotto = new Lotto(createLottoNumbers(1, 2, 3, 4, 5, 7));
+
+        // when
+        Rank rank = winningNumbers.checkRank(purchasedLotto);
+
+        // then
+        assertThat(rank).isEqualTo(Rank.SECOND);
+    }
+
+    @DisplayName("5개 일치하고 보너스가 불일치하면 3등이다")
+    @Test
+    void 삼등_판정() {
+        // given
+        Lotto winningLotto = new Lotto(createLottoNumbers(1, 2, 3, 4, 5, 6));
+        WinningNumbers winningNumbers = new WinningNumbers(winningLotto, new LottoNumber(7));
+        Lotto purchasedLotto = new Lotto(createLottoNumbers(1, 2, 3, 4, 5, 8));
+
+        // when
+        Rank rank = winningNumbers.checkRank(purchasedLotto);
+
+        // then
+        assertThat(rank).isEqualTo(Rank.THIRD);
+    }
+
+    @DisplayName("4개 일치하면 4등이다")
+    @Test
+    void 사등_판정() {
+        // given
+        Lotto winningLotto = new Lotto(createLottoNumbers(1, 2, 3, 4, 5, 6));
+        WinningNumbers winningNumbers = new WinningNumbers(winningLotto, new LottoNumber(7));
+        Lotto purchasedLotto = new Lotto(createLottoNumbers(1, 2, 3, 4, 8, 9));
+
+        // when
+        Rank rank = winningNumbers.checkRank(purchasedLotto);
+
+        // then
+        assertThat(rank).isEqualTo(Rank.FOURTH);
+    }
+
+    @DisplayName("3개 일치하면 5등이다")
+    @Test
+    void 오등_판정() {
+        // given
+        Lotto winningLotto = new Lotto(createLottoNumbers(1, 2, 3, 4, 5, 6));
+        WinningNumbers winningNumbers = new WinningNumbers(winningLotto, new LottoNumber(7));
+        Lotto purchasedLotto = new Lotto(createLottoNumbers(1, 2, 3, 8, 9, 10));
+
+        // when
+        Rank rank = winningNumbers.checkRank(purchasedLotto);
+
+        // then
+        assertThat(rank).isEqualTo(Rank.FIFTH);
+    }
+
+    @DisplayName("2개 이하 일치하면 낙첨이다")
+    @Test
+    void 낙첨_판정() {
+        // given
+        Lotto winningLotto = new Lotto(createLottoNumbers(1, 2, 3, 4, 5, 6));
+        WinningNumbers winningNumbers = new WinningNumbers(winningLotto, new LottoNumber(7));
+        Lotto purchasedLotto = new Lotto(createLottoNumbers(1, 2, 8, 9, 10, 11));
+
+        // when
+        Rank rank = winningNumbers.checkRank(purchasedLotto);
+
+        // then
+        assertThat(rank).isEqualTo(Rank.NONE);
+    }
 }

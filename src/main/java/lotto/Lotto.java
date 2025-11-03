@@ -41,4 +41,10 @@ public class Lotto {
     public boolean contains(LottoNumber number) {
         return numbers.contains(number);
     }
+
+    public int countMatches(Lotto other) {
+        return (int) this.numbers.stream()
+                .filter(other::contains)
+                .count();
+    }
 }
