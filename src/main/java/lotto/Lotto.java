@@ -2,6 +2,7 @@ package lotto;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 import lotto.error.LottoErrorMessage;
 
 public class Lotto {
@@ -13,7 +14,9 @@ public class Lotto {
 
     public Lotto(List<Integer> numbers) {
         validate(numbers);
-        this.numbers = numbers;
+        this.numbers = numbers.stream()
+                .sorted()
+                .toList();
     }
 
     private void validate(List<Integer> numbers) {
@@ -41,5 +44,9 @@ public class Lotto {
         if (new HashSet<>(numbers).size() != numbers.size()) {
             throw new IllegalArgumentException(LottoErrorMessage.duplicateNumbers());
         }
+    }
+
+    public String toDisplayString() {
+        return numbers.toString();
     }
 }
