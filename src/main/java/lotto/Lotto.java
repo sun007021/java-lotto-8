@@ -37,4 +37,8 @@ public class Lotto {
     public List<LottoNumber> getNumbers() {
         return List.copyOf(numbers);
     }
+
+    public boolean contains(LottoNumber number) {
+        return numbers.contains(number);
+    }
 }
