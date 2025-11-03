@@ -51,7 +51,6 @@ class WinningNumbersTest {
     void 당첨_번호_개수_예외() {
         // given
         List<LottoNumber> numbers = createLottoNumbers(1, 2, 3, 4, 5);
-        LottoNumber bonus = new LottoNumber(7);
 
         // when & then
         assertThatThrownBy(() -> new Lotto(numbers))
@@ -65,7 +64,6 @@ class WinningNumbersTest {
     void 당첨_번호_중복_예외() {
         // given
         List<LottoNumber> numbers = createLottoNumbers(1, 2, 3, 4, 5, 5);
-        LottoNumber bonus = new LottoNumber(7);
 
         // when & then
         assertThatThrownBy(() -> new Lotto(numbers))
@@ -77,9 +75,6 @@ class WinningNumbersTest {
     @DisplayName("보너스 번호가 1~45 범위를 벗어나면 예외가 발생한다")
     @Test
     void 보너스_번호_범위_예외() {
-        // given
-        Lotto winningLotto = new Lotto(createLottoNumbers(1, 2, 3, 4, 5, 6));
-
         // when & then
         assertThatThrownBy(() -> new LottoNumber(46))
                 .isInstanceOf(IllegalArgumentException.class);
