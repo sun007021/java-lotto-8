@@ -31,7 +31,10 @@ public class LottoGame {
 
     private Lotto generateLotto() {
         List<Integer> numbers = Randoms.pickUniqueNumbersInRange(1, 45, 6);
-        return new Lotto(numbers);
+        List<LottoNumber> lottoNumbers = numbers.stream()
+                .map(LottoNumber::new)
+                .toList();
+        return new Lotto(lottoNumbers);
     }
 
     public LottoTickets getTickets() {

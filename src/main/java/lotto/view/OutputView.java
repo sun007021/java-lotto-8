@@ -1,6 +1,7 @@
 package lotto.view;
 
 import java.util.List;
+import lotto.LottoNumber;
 import lotto.LottoTickets;
 
 public class OutputView {
@@ -15,7 +16,7 @@ public class OutputView {
         System.out.println(String.format(MESSAGE_PURCHASE_COUNT, count));
     }
 
-    private static void printLottoNumbers(List<List<Integer>> lottoNumbersList) {
+    private static void printLottoNumbers(List<List<LottoNumber>> lottoNumbersList) {
         lottoNumbersList.forEach(System.out::println);
     }
 }

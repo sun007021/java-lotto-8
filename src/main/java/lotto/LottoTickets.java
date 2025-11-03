@@ -14,7 +14,7 @@ public class LottoTickets {
         return lottos.size();
     }
 
-    public List<List<Integer>> getAllLottoNumbers() {
+    public List<List<LottoNumber>> getAllLottoNumbers() {
         return lottos.stream()
                 .map(Lotto::getNumbers)
                 .toList();
