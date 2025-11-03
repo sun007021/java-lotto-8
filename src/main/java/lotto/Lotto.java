@@ -46,7 +46,7 @@ public class Lotto {
         }
     }
 
-    public String toDisplayString() {
-        return numbers.toString();
+    public List<Integer> getNumbers() {
+        return List.copyOf(numbers);
     }
 }
