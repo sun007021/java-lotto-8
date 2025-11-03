@@ -20,10 +20,15 @@ public class LottoResult {
         }
     }
 
-    public int getTotalPrize() {
+    public long getTotalPrize() {
         return rankCounts.entrySet().stream()
-                .mapToInt(entry -> entry.getKey().getPrize() * entry.getValue())
+                .mapToLong(entry -> (long) entry.getKey().getPrize() * entry.getValue())
                 .sum();
+    }
+
+    public double calculateReturnRate(int purchaseAmount) {
+        long totalPrize = getTotalPrize();
+        return (double) totalPrize / purchaseAmount * 100;
     }
 
     public int getCountByRank(Rank rank) {

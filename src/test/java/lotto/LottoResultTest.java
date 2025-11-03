@@ -19,10 +19,10 @@ class LottoResultTest {
         LottoResult result = new LottoResult(rankCounts);
 
         // when
-        int totalPrize = result.getTotalPrize();
+        long totalPrize = result.getTotalPrize();
 
         // then
-        assertThat(totalPrize).isEqualTo(60_000);
+        assertThat(totalPrize).isEqualTo(60_000L);
     }
 
     @DisplayName("특정 등수의 당첨 개수를 조회한다")
@@ -97,5 +97,50 @@ class LottoResultTest {
 
         // then
         assertThat(totalPrize).isEqualTo(2_033_175_000);
+    }
+
+    @DisplayName("1등이 여러 장일 때 총 상금을 정확히 계산한다 (오버플로우 검증)")
+    @Test
+    void 일등_여러장_상금_계산() {
+        // given
+        Map<Rank, Integer> rankCounts = Map.of(
+                Rank.FIRST, 3      // 2,000,000,000 * 3 = 6,000,000,000 (int 최대값 초과)
+        );
+        LottoResult result = new LottoResult(rankCounts);
+
+        // when
+        int totalPrize = result.getTotalPrize();
+
+        // then
+        assertThat(totalPrize).isEqualTo(6_000_000_000L);
+    }
+
+    @DisplayName("수익률을 정확히 계산한다")
+    @Test
+    void 수익률_계산() {
+        // given
+        Map<Rank, Integer> rankCounts = Map.of(Rank.FIFTH, 1);  // 5,000원
+        LottoResult result = new LottoResult(rankCounts);
+
+        // when
+        double returnRate = result.calculateReturnRate(10_000);
+
+        // then
+        assertThat(returnRate).isEqualTo(50.0);
+    }
+
+    @DisplayName("수익률이 소수점일 때 정확히 계산한다")
+    @Test
+    void 수익률_소수점_계산() {
+        // given
+        Map<Rank, Integer> rankCounts = Map.of(Rank.FIFTH, 1);  // 5,000원
+        LottoResult result = new LottoResult(rankCounts);
+
+        // when
+        double returnRate = result.calculateReturnRate(14_000);
+
+        // then
+        // 5,000 / 14,000 * 100 = 35.714...
+        assertThat(returnRate).isCloseTo(35.714, org.assertj.core.data.Offset.offset(0.001));
     }
 }

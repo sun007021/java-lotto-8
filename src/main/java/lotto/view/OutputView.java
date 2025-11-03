@@ -12,6 +12,7 @@ public class OutputView {
     private static final String MESSAGE_SEPARATOR = "---";
     private static final String MESSAGE_RANK_FORMAT = "%d개 일치 (%s원) - %d개";
     private static final String MESSAGE_RANK_WITH_BONUS_FORMAT = "%d개 일치, 보너스 볼 일치 (%s원) - %d개";
+    private static final String MESSAGE_RETURN_RATE = "총 수익률은 %.1f%%입니다."; // 소수점 둘째자리 반올림
 
     public static void printPurchasedLottos(LottoTickets tickets) {
         printPurchaseCount(tickets.getCount());
@@ -26,11 +27,17 @@ public class OutputView {
         lottoNumbersList.forEach(System.out::println);
     }
 
-    public static void printResults(LottoResult result) {
+    public static void printResults(LottoResult result, int purchaseAmount) {
         System.out.println();
         System.out.println(MESSAGE_STATISTICS_HEADER);
         System.out.println(MESSAGE_SEPARATOR);
         printRankStatistics(result);
+        printReturnRate(result, purchaseAmount);
+    }
+
+    private static void printReturnRate(LottoResult result, int purchaseAmount) {
+        double returnRate = result.calculateReturnRate(purchaseAmount);
+        System.out.println(String.format(MESSAGE_RETURN_RATE, returnRate));
     }
 
     private static void printRankStatistics(LottoResult result) {

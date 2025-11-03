@@ -6,17 +6,13 @@ import lotto.view.OutputView;
 public class LottoController {
 
     public void run() {
-        LottoGame game = RetryHandler.retryOnException(this::purchaseLotto);
+        int purchaseAmount = RetryHandler.retryOnException(this::readPurchaseAmount);
+        LottoGame game = new LottoGame(purchaseAmount);
         OutputView.printPurchasedLottos(game.getTickets());
 
         WinningNumbers winningNumbers = createWinningNumbers();
         LottoResult result = game.getTickets().checkResults(winningNumbers);
-        OutputView.printResults(result);
-    }
-
-    private LottoGame purchaseLotto() {
-        int amount = readPurchaseAmount();
-        return new LottoGame(amount);
+        OutputView.printResults(result, purchaseAmount);
     }
 
     private int readPurchaseAmount() {
