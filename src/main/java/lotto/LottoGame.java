@@ -2,6 +2,7 @@ package lotto;
 
 import camp.nextstep.edu.missionutils.Randoms;
 import java.util.List;
+import java.util.stream.Stream;
 import lotto.error.LottoGameErrorMessage;
 
 public class LottoGame {
@@ -21,14 +22,18 @@ public class LottoGame {
     }
 
     private LottoTickets purchaseLottos(int purchaseAmount) {
-        // TODO: 로또 생성 로직 구현 필요
-        return new LottoTickets(List.of());
+        int lottoCount = purchaseAmount / LOTTO_PRICE;
+        List<Lotto> lottos = Stream.generate(this::generateLotto)
+                .limit(lottoCount)
+                .toList();
+        return new LottoTickets(lottos);
     }
 
-    private Lotto generateLotto(){
+    private Lotto generateLotto() {
         List<Integer> numbers = Randoms.pickUniqueNumbersInRange(1, 45, 6);
         return new Lotto(numbers);
     }
+
     public LottoTickets getTickets() {
         return tickets;
     }
