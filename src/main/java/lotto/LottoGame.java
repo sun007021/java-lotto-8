@@ -1,5 +1,7 @@
 package lotto;
 
+import camp.nextstep.edu.missionutils.Randoms;
+import java.util.List;
 import lotto.error.LottoGameErrorMessage;
 
 public class LottoGame {
@@ -23,6 +25,10 @@ public class LottoGame {
         return new LottoTickets(List.of());
     }
 
+    private Lotto generateLotto(){
+        List<Integer> numbers = Randoms.pickUniqueNumbersInRange(1, 45, 6);
+        return new Lotto(numbers);
+    }
     public LottoTickets getTickets() {
         return tickets;
     }
